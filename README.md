@@ -2,6 +2,8 @@
 
 Syntax-highlights raw text files (e.g. GitLab "Open raw" pages) on demand.
 
+Co-authored: Claude code
+
 ## Install (unpacked)
 
 1. Open `chrome://extensions` and enable **Developer mode**.
