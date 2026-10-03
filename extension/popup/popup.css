@@ -1,0 +1,181 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #656d76;
+  --border: #d0d7de;
+  --field-bg: #f6f8fa;
+  --accent: #7c3aed;
+  --accent-fg: #ffffff;
+  --error: #cf222e;
+  --ok: #1a7f37;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1f22;
+    --fg: #e6edf3;
+    --muted: #9198a1;
+    --border: #3d444d;
+    --field-bg: #2b2d31;
+    --accent: #8b5cf6;
+    --accent-fg: #ffffff;
+    --error: #ff7b72;
+    --ok: #3fb950;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 300px;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+h1 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+select {
+  width: 100%;
+  padding: 5px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field-bg);
+  color: var(--fg);
+  font: inherit;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.check input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.group legend {
+  padding: 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.inline select {
+  width: 64px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.actions[hidden] {
+  display: none;
+}
+
+.actions.secondary {
+  margin-top: 0;
+}
+
+.actions.secondary button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+button {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field-bg);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button:not(:disabled):hover {
+  filter: brightness(1.08);
+}
+
+.status {
+  min-height: 1.4em;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status.error {
+  color: var(--error);
+}
+
+.status.ok {
+  color: var(--ok);
+}

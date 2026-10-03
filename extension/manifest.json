@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Raw Beautifier",
+  "short_name": "Raw Beautifier",
+  "version": "1.0.0",
+  "description": "Syntax-highlight raw files (GitLab raw view, plain-text JSON/XML/source code) on demand, with light and dark themes and optional line numbers.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Raw Beautifier",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": ["activeTab", "scripting", "storage"]
+}

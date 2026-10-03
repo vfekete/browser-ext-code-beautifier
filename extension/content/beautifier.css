@@ -1,0 +1,208 @@
+/* Base layout for the highlighted view. Theme colours come from themes/*.css (highlight.js styles). */
+
+html.rb-active,
+html.rb-active body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--rb-page-bg, transparent) !important;
+}
+
+/* Hide the original <pre> (and e.g. Chrome's JSON "pretty-print" bar) while highlighted. */
+html.rb-active body > :not(.rb-root):not(.rb-overlay) {
+  display: none !important;
+}
+
+.rb-root,
+.rb-root pre {
+  margin: 0;
+  padding: 0;
+}
+
+.rb-root pre code.hljs {
+  display: block;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 12px 16px;
+  overflow-x: auto;
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  tab-size: 4;
+  white-space: pre;
+}
+
+.rb-root.rb-wrap pre code.hljs,
+.rb-root.rb-wrap .rb-lc {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Lines are grouped into chunks; off-screen chunks are skipped by layout and paint. */
+.rb-root .rb-chunk {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto calc(200 * 1.5em);
+}
+
+/* Chunks are size-contained, so the code must be wide enough for the longest line:
+   --rb-maxch (longest line, in columns) + --rb-gutter-px (measured gutter + paddings). */
+.rb-root:not(.rb-wrap) code.hljs {
+  min-width: calc(var(--rb-maxch, 0) * 1ch + var(--rb-gutter-px, 10em));
+}
+
+/* Each source line is a flex row: [line number] [fold arrow] [code]. */
+.rb-root .rb-line {
+  display: flex;
+  min-height: 1.5em;
+}
+
+.rb-root .rb-line.rb-hidden {
+  display: none;
+}
+
+.rb-root .rb-lc {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: pre;
+}
+
+.rb-root code.rb-num,
+.rb-root code.rb-folding {
+  padding-left: 0;
+}
+
+/* Line numbers and arrows are generated content, so they are never included when copying text. */
+.rb-root code.rb-num .rb-line::before {
+  content: attr(data-n);
+  flex: none;
+  box-sizing: content-box;
+  min-width: var(--rb-gutter, 3ch);
+  padding: 0 12px;
+  text-align: right;
+  opacity: 0.45;
+  border-right: 1px solid currentColor;
+  user-select: none;
+}
+
+.rb-root code.rb-num:not(.rb-folding) .rb-line::before {
+  margin-right: 12px;
+}
+
+.rb-root code.rb-num .rb-line:hover::before {
+  opacity: 0.9;
+}
+
+.rb-root .rb-fold {
+  flex: none;
+  width: 1.6em;
+  margin-right: 4px;
+  text-align: center;
+  user-select: none;
+  opacity: 0.35;
+}
+
+.rb-root .rb-fold.rb-can {
+  cursor: pointer;
+}
+
+.rb-root .rb-fold.rb-can::before {
+  content: "\25BE"; /* ▾ */
+}
+
+.rb-root .rb-line:hover > .rb-fold,
+.rb-root .rb-line.rb-folded > .rb-fold {
+  opacity: 0.9;
+}
+
+.rb-root .rb-line.rb-folded > .rb-fold::before {
+  content: "\25B8"; /* ▸ */
+}
+
+.rb-root .rb-line.rb-folded > .rb-lc::after {
+  content: "\2026"; /* … */
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  user-select: none;
+}
+
+/* "!" marker for lines the colorized view may render wrongly or change (tooltip explains why). */
+.rb-root .rb-wcol {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  margin-left: 4px;
+  user-select: none;
+}
+
+.rb-root code:not(.rb-num):not(.rb-folding) .rb-wcol {
+  margin-left: -8px;
+  margin-right: 4px;
+}
+
+.rb-root .rb-warn::before {
+  content: "!";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 3px;
+  background: #e8a317;
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2em;
+  text-align: center;
+}
+
+.rb-root .rb-warn {
+  cursor: help;
+}
+
+/* "Colorizing…" overlay: blurs the page while a (long) file is being rendered. */
+.rb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(127, 127, 127, 0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  /* Fast renders finish before the overlay fades in, so it does not flicker. */
+  animation: rb-fade-in 0.15s ease-out 0.12s both;
+  cursor: progress;
+}
+
+.rb-overlay-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.88);
+  color: #f4f4f5;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  font: 600 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.rb-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  /* transform animations run on the compositor, so they keep spinning during rendering */
+  animation: rb-spin 0.8s linear infinite;
+}
+
+@keyframes rb-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rb-spin {
+  to { transform: rotate(360deg); }
+}

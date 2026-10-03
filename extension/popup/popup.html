@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Raw Beautifier</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon32.png" alt="" width="20" height="20">
+    <h1>Raw Beautifier</h1>
+  </header>
+
+  <main>
+    <label class="field">
+      <span>Highlighting</span>
+      <select id="theme"></select>
+    </label>
+
+    <label class="field">
+      <span>Language</span>
+      <select id="language"></select>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="lineNumbers">
+      <span>Show line numbers</span>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="wrap">
+      <span>Wrap long lines</span>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="folding">
+      <span>Folding arrows</span>
+    </label>
+
+    <fieldset class="group">
+      <legend>Indentation</legend>
+      <label class="check">
+        <input type="checkbox" id="tabsToSpaces">
+        <span>Convert indentation tabs to spaces</span>
+      </label>
+      <label class="inline">
+        <span>Spaces per indent level (tab)</span>
+        <select id="tabSize">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <div class="actions">
+      <button id="colorize" class="primary">Colorize</button>
+      <button id="restore">Show original</button>
+    </div>
+
+    <div class="actions secondary" id="foldActions" hidden>
+      <button id="foldAll">Collapse all</button>
+      <button id="unfoldAll">Expand all</button>
+    </div>
+
+    <p id="status" class="status"></p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
